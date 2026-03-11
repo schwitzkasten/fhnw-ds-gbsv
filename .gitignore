@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+WESAD/
+*.pkl
+
 # ignore S3 to S17 folders
 S3/
 S4/
