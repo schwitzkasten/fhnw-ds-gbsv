@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>day-1</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>day-2</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7714,6 +7714,92 @@ Max   : 255
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Observations (ROI)</strong>: This ROI was selected because it captures central ibex body contours together with adjacent background, including fur-to-rock transitions while the full image also contains fur-to-sky transitions. In this region, fur texture is visibly distinct from nearby stone texture, and contour edges are clearly traceable. This directly supports the Day 1 objective of preserving detection-relevant structure under mixed Swiss alpine backgrounds.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=511dd919">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Day-2---Methodological-Design">Day 2 - Methodological Design<a class="anchor-link" href="#Day-2---Methodological-Design">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ee5e9403">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Theoretical-Foundation-and-Method-Choice">Theoretical Foundation and Method Choice<a class="anchor-link" href="#Theoretical-Foundation-and-Method-Choice">¶</a></h3><p>Two non-geometric augmentations are selected to match the Day 1 challenge. <strong>(1) Gamma correction</strong> applies a nonlinear intensity transform to simulate illumination shifts typical of alpine sun, shadow, and haze. <strong>(2) Additive Gaussian noise</strong> simulates sensor noise that can reduce local boundary clarity. These methods are appropriate because the key structure is the ibex fur-to-background contour (sky-backed and rock-backed), where both intensity remapping and noise directly affect edge visibility and texture discrimination.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=37304916">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Parameter-Definition-and-Mathematical-Specification">Parameter Definition and Mathematical Specification<a class="anchor-link" href="#Parameter-Definition-and-Mathematical-Specification">¶</a></h3><p>For gamma correction, the transformation is <code>I_out = 255 * (I_in / 255)^gamma</code>. Key parameter: <strong>gamma</strong>. Values <code>&lt; 1</code> brighten darker tones and compress contrast near highlights, which changes fur-shading and sky/rock separability. For noise, the transformation is <code>I_out = clip(I_in + n, 0, 255)</code> with <code>n ~ N(0, sigma^2)</code>. Key parameter: <strong>sigma</strong> controls noise amplitude; larger sigma increases random texture perturbation and weakens fine contour detail in fur and boundary regions.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=94bea49e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Experimental-Design-for-Next-Days">Experimental Design for Next Days<a class="anchor-link" href="#Experimental-Design-for-Next-Days">¶</a></h3><p>The target change is controlled illumination-noise variability while preserving identifiable ibex structure.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th style="text-align:right">Gamma</th>
+<th style="text-align:right">Noise sigma</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C0 Baseline</td>
+<td style="text-align:right">1.00</td>
+<td style="text-align:right">0</td>
+<td>Reference without synthetic change</td>
+</tr>
+<tr>
+<td>C1 Moderate</td>
+<td style="text-align:right">0.90</td>
+<td style="text-align:right">8</td>
+<td>Realistic moderate lighting/noise shift</td>
+</tr>
+<tr>
+<td>C2 Strong</td>
+<td style="text-align:right">0.75</td>
+<td style="text-align:right">16</td>
+<td>Strong stress-test of boundary/texture stability</td>
+</tr>
+</tbody>
+</table>
+<p>Controlled variables across all configurations: same input image, same ROI coordinates, same processing order (gamma then noise), and fixed random seed for reproducibility.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f528cd07">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Methodological-Limitations-and-Risk-Factors">Methodological Limitations and Risk Factors<a class="anchor-link" href="#Methodological-Limitations-and-Risk-Factors">¶</a></h3><p>Gamma and Gaussian models are useful approximations but do not capture all alpine effects (e.g., directional glare, weather-dependent veiling, motion blur). Over-strong parameters can create unrealistic textures and may teach models to rely on synthetic artifacts. Therefore, a small, traceable parameter set is used to support controlled comparison rather than broad random generation.</p>
 </div>
 </div>
 </div>
