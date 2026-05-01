@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+
+# ignore data folders
+data/
+data/*
+Steinbock.jpg
+
+
 WESAD/
 *.pkl
 
